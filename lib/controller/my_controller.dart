@@ -6,21 +6,32 @@ class LocalAuthApi {
 
   static Future<bool> hasBiometrics() async {
     try {
-      return await _auth
-          .canCheckBiometrics; //to check if the device has biometrics
+      return await _auth.canCheckBiometrics;
     } on PlatformException catch (e) {
       return false;
+    }
+  }
+
+  static Future<List<BiometricType>> getBiometrics() async {
+    try {
+      return await _auth.getAvailableBiometrics();
+    } on PlatformException catch (e) {
+      return <BiometricType>[];
     }
   }
 
   static Future<bool> authenticate() async {
     final isAvailable = await hasBiometrics();
     if (!isAvailable) return false;
+
     try {
       return await _auth.authenticate(
-          localizedReason: "Scan fingerprint to Authentcate",
-          options:
-              AuthenticationOptions(useErrorDialogs: true, stickyAuth: true));
+        localizedReason: 'Scan Fingerprint to Authenticate',
+        options: AuthenticationOptions(
+          useErrorDialogs: true,
+          stickyAuth: true,
+        ),
+      );
     } on PlatformException catch (e) {
       return false;
     }

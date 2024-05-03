@@ -1,11 +1,14 @@
+import 'package:biometric_task/view/fingerprint_page.dart';
 import 'package:biometric_task/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(MyApp());
 }
 
@@ -14,6 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HomeScreen();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FingerPrintPage(),
+    );
   }
 }
